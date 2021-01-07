@@ -34,7 +34,9 @@
   <script type="systemjs-importmap">
     {
       "imports": {
-        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.8.3/lib/system/single-spa.min.js"
+        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.8.3/lib/system/single-spa.min.js",
+        "react": "https://cdn.jsdelivr.net/npm/react@16.12.0/umd/react.production.min.js",
+        "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@16.12.0/umd/react-dom.production.min.js"
       }
     }
   </script>
@@ -47,8 +49,8 @@
   <script type="systemjs-importmap">
     {
       "imports": {
-        "@single-spa/welcome": "https://unpkg.com/single-spa-welcome/dist/single-spa-welcome.js",
-        "@buggy-demo/root-config": "//localhost:9000/buggy-demo-root-config.js"
+        "@buggy-demo/root-config": "//localhost:9000/buggy-demo-root-config.js",
+        "@buggy-demo/app": "//localhost:8080/buggy-demo-app.js"
       }
     }
   </script>
@@ -72,14 +74,22 @@
 
   <template id="single-spa-layout">
     <single-spa-router>
-      <!-- <nav>
-        <application name="@<%- orgName %>/navbar"></application>
-      </nav> -->
-      <main>
-        <route default>
-          <application name="@single-spa/welcome"></application>
-        </route>
-      </main>
+      <route default>
+        <h1>Home</h1>
+        <ul>
+          <li>
+            <a href="/app" onclick="singleSpaNavigate()">Link 1 (causes reload)</a>
+          </li>
+          <li>
+            <a href="#" onclick="singleSpaNavigate('/app')">Link 2 (briefly shows two routes simultaneously)</a>
+          </li>
+        </ul>
+      </route>
+
+      <route path="app">
+        <h1>App</h1>
+        <application name="@buggy-demo/app"></application>
+      </route>
     </single-spa-router>
   </template>
 </head>
